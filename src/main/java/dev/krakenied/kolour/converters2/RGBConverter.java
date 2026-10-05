@@ -1,6 +1,7 @@
 package dev.krakenied.kolour.converters2;
 
 import dev.krakenied.kolour.object.IntBitSet;
+import dev.krakenied.kolour.util.Constants;
 import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
@@ -41,11 +42,11 @@ public final class RGBConverter extends ColorConverter {
 
     private static int quantize(final int value, final int bits) {
         final int max = (1 << bits) - 1;
-        return (value * max + 127) / 255;
+        return (value * max + Constants.RGB_MAX / 2) / Constants.RGB_MAX;
     }
 
     private static int dequantize(final int value, final int bits) {
         final int max = (1 << bits) - 1;
-        return (value * 255 + max / 2) / max;
+        return (value * Constants.RGB_MAX + max / 2) / max;
     }
 }

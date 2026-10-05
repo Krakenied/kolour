@@ -14,7 +14,7 @@ public abstract class ColorConverter {
     @FunctionalInterface
     public interface Function {
 
-        IntBitSet apply(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index);
+        IntBitSet apply(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index); // TODO: check if full bitSizeList is actually needed
     }
 
     protected final List<Function> fromRGBFunctions;

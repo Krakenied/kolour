@@ -8,7 +8,7 @@ public record IntBitSet(int value, int size) {
 
     public IntBitSet {
         if ((value >> size) != 0) {
-            throw new IllegalArgumentException("invalid value " + DebugUtil.toBinaryString(value));
+            throw new IllegalArgumentException("invalid value " + DebugUtil.toBinaryString(value) + " for bit size " + size);
         }
     }
 }
