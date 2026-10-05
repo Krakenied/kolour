@@ -3,41 +3,40 @@ package dev.krakenied.kolour.converters2;
 import dev.krakenied.kolour.object.IntBitSet;
 import org.jspecify.annotations.NullMarked;
 
+import java.util.List;
+
 @NullMarked
 public final class RGBConverter extends ColorConverter {
 
     public RGBConverter() {
-        final Function fromRGBFunction = (bitSetList, bitSizeList, index) -> {
-            final IntBitSet bitSet = bitSetList.get(index);
-            final int bitSize = bitSizeList.get(index);
+        for (int i = 0; i < 3; i++) {
+            this.fromRGBFunctions.add(RGBConverter::fromRGB);
+            this.toRGBFunctions.add(RGBConverter::toRGB);
+        }
+    }
 
-            return new IntBitSet(
-                    quantize(bitSet.value(), bitSize),
-                    bitSize
-            );
-        };
+    private static IntBitSet fromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+        final IntBitSet bitSet = bitSetList.get(index);
+        final int bitSize = bitSizeList.get(index);
 
-        this.fromRGBFunctions.add(fromRGBFunction);
-        this.fromRGBFunctions.add(fromRGBFunction);
-        this.fromRGBFunctions.add(fromRGBFunction);
+        return new IntBitSet(
+                quantize(bitSet.value(), bitSize),
+                bitSize
+        );
+    }
 
-        final Function toRGBFunction = (bitSetList, bitSizeList, index) -> {
-            final IntBitSet bitSet = bitSetList.get(index);
-            final int targetBitSize = bitSizeList.get(index);
-            final int bitSetSize = bitSet.size();
+    private static IntBitSet toRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+        final IntBitSet bitSet = bitSetList.get(index);
+        final int targetBitSize = bitSizeList.get(index);
+        final int bitSetSize = bitSet.size();
 
-            final int mask = (1 << bitSetSize) - 1;
-            final int quantized = bitSet.value() & mask;
+        final int mask = (1 << bitSetSize) - 1;
+        final int quantized = bitSet.value() & mask;
 
-            return new IntBitSet(
-                    dequantize(quantized, bitSetSize),
-                    targetBitSize
-            );
-        };
-
-        this.toRGBFunctions.add(toRGBFunction);
-        this.toRGBFunctions.add(toRGBFunction);
-        this.toRGBFunctions.add(toRGBFunction);
+        return new IntBitSet(
+                dequantize(quantized, bitSetSize),
+                targetBitSize
+        );
     }
 
     private static int quantize(final int value, final int bits) {
