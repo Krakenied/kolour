@@ -25,9 +25,9 @@ public final class HSVConverter extends ColorConverter {
 
     private static FloatTuple3 getNormalizedChannels(final List<IntBitSet> bitSetList) {
         return new FloatTuple3(
-                (float) bitSetList.get(0).value() / bitSetList.get(0).size(),
-                (float) bitSetList.get(1).value() / bitSetList.get(1).size(),
-                (float) bitSetList.get(2).value() / bitSetList.get(2).size()
+                (float) bitSetList.get(0).value() / ((1 << bitSetList.get(0).size()) - 1),
+                (float) bitSetList.get(1).value() / ((1 << bitSetList.get(1).size()) - 1),
+                (float) bitSetList.get(2).value() / ((1 << bitSetList.get(2).size()) - 1)
         );
     }
 
