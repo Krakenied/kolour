@@ -2,11 +2,12 @@ package dev.krakenied.kolour.converters;
 
 import dev.krakenied.kolour.object.IntBitSet;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 @NullMarked
-public final class HSVConverter extends ColorConverter {
+public final class HSVConverter extends ColorConverter<Object, Object> {
 
     public HSVConverter() {
         super();
@@ -31,7 +32,7 @@ public final class HSVConverter extends ColorConverter {
         );
     }
 
-    private static IntBitSet hueFromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet hueFromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final FloatTuple3 norm = getNormalizedChannels(bitSetList);
         final float min = Math.min(Math.min(norm.first, norm.second), norm.third);
 
@@ -77,7 +78,7 @@ public final class HSVConverter extends ColorConverter {
         );
     }
 
-    private static IntBitSet saturationFromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet saturationFromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final FloatTuple3 norm = getNormalizedChannels(bitSetList);
         final float min = Math.min(Math.min(norm.first, norm.second), norm.third);
         final float max = Math.max(Math.max(norm.first, norm.second), norm.third);
@@ -96,7 +97,7 @@ public final class HSVConverter extends ColorConverter {
         );
     }
 
-    private static IntBitSet valueFromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet valueFromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final FloatTuple3 norm = getNormalizedChannels(bitSetList);
 
         return new IntBitSet(
@@ -115,7 +116,7 @@ public final class HSVConverter extends ColorConverter {
         return new FloatTuple3(chroma, intermediate, match);
     }
 
-    private static IntBitSet HSVToRed(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet HSVToRed(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final FloatTuple3 norm = getNormalizedChannels(bitSetList);
         final FloatTuple3 cim = ChromaIntermediateMatch(norm);
         final float hue = norm.first * 360.0f;
@@ -136,7 +137,7 @@ public final class HSVConverter extends ColorConverter {
         );
     }
 
-    private static IntBitSet HSVToGreen(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet HSVToGreen(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final FloatTuple3 norm = getNormalizedChannels(bitSetList);
         final FloatTuple3 cim = ChromaIntermediateMatch(norm);
         final float hue = norm.first * 360.0f;
@@ -157,7 +158,7 @@ public final class HSVConverter extends ColorConverter {
         );
     }
 
-    private static IntBitSet HSVToBlue(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet HSVToBlue(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final FloatTuple3 norm = getNormalizedChannels(bitSetList);
         final FloatTuple3 cim = ChromaIntermediateMatch(norm);
         final float hue = norm.first * 360.0f;

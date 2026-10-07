@@ -3,11 +3,12 @@ package dev.krakenied.kolour.converters;
 import dev.krakenied.kolour.object.IntBitSet;
 import dev.krakenied.kolour.util.Constants;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 @NullMarked
-public final class RGBConverter extends ColorConverter {
+public final class RGBConverter extends ColorConverter<Object, Object> {
 
     public RGBConverter() {
         for (int i = 0; i < 3; i++) {
@@ -16,7 +17,7 @@ public final class RGBConverter extends ColorConverter {
         }
     }
 
-    private static IntBitSet fromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet fromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final IntBitSet bitSet = bitSetList.get(index);
         final int bitSize = bitSizeList.get(index);
 
@@ -26,7 +27,7 @@ public final class RGBConverter extends ColorConverter {
         );
     }
 
-    private static IntBitSet toRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet toRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         final IntBitSet bitSet = bitSetList.get(index);
         final int targetBitSize = bitSizeList.get(index);
         final int bitSetSize = bitSet.size();

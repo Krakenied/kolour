@@ -5,12 +5,13 @@ import dev.krakenied.kolour.object.IntBitSet;
 import dev.krakenied.kolour.normalizers.SimpleNormalizer;
 import dev.krakenied.kolour.util.Constants;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 @SuppressWarnings("DuplicatedCode")
 @NullMarked
-public final class YIQConverter extends ColorConverter {
+public final class YIQConverter extends ColorConverter<Object, Object> {
 
     private static final double Y_MIN = Constants.RGB_CHAN_MIN;
     private static final double Y_MAX = Constants.RGB_CHAN_MAX;
@@ -34,27 +35,27 @@ public final class YIQConverter extends ColorConverter {
         this.toRGBFunctions.add(YIQConverter::b);
     }
 
-    private static IntBitSet y(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet y(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         return normalizeHelper(bitSetList, bitSizeList.get(index), 0.3d, 0.59d, 0.11d, Y_NORMALIZER);
     }
 
-    private static IntBitSet i(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet i(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         return normalizeHelper(bitSetList, bitSizeList.get(index), 0.599d, -0.2773d, -0.3217d, I_NORMALIZER);
     }
 
-    private static IntBitSet q(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet q(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         return normalizeHelper(bitSetList, bitSizeList.get(index), 0.213d, -0.5251d, 0.3121d, Q_NORMALIZER);
     }
 
-    private static IntBitSet r(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet r(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         return denormalizeHelper(bitSetList, bitSizeList.get(index), 1.0d, 0.9469d, 0.6236d);
     }
 
-    private static IntBitSet g(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet g(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         return denormalizeHelper(bitSetList, bitSizeList.get(index), 1.0d, -0.2748d, -0.6357d);
     }
 
-    private static IntBitSet b(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
+    private static IntBitSet b(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index, final @Nullable Object data) {
         return denormalizeHelper(bitSetList, bitSizeList.get(index), 1.0d, -1.1d, 1.7d);
     }
 

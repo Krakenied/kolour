@@ -31,7 +31,7 @@ public abstract class ColorConverter<F, T> {
         this.toRGBFunctions = new ArrayList<>(Constants.RGB_CHAN_COUNT);
     }
 
-    public @Nullable F fromRGBData(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index) {
+    public @Nullable F fromRGBData(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
         return null;
     }
 
@@ -39,7 +39,7 @@ public abstract class ColorConverter<F, T> {
         return convert(bitSetList, bitSizeList, this::fromRGBData, this.fromRGBFunctions);
     }
 
-    public @Nullable T toRGBData(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index) {
+    public @Nullable T toRGBData(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final int index) {
         return null;
     }
 
