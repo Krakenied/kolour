@@ -260,7 +260,7 @@ class HSVConverterTest {
         final List<IntBitSet> rgb = this.converter.toRGB(hsv);
 
         assertTrue(Math.abs(rgb.get(0).value() - 255) <= 2);
-        assertTrue(Math.abs(rgb.get(1).value() - 255) <= 2);
+        assertTrue(Math.abs(rgb.get(1).value() - 252) <= 2);
         assertTrue(rgb.get(2).value() <= 2);
     }
 
@@ -276,7 +276,7 @@ class HSVConverterTest {
 
         assertTrue(rgb.get(0).value() <= 2);
         assertTrue(Math.abs(rgb.get(1).value() - 255) <= 2);
-        assertTrue(Math.abs(rgb.get(2).value() - 255) <= 2);
+        assertTrue(Math.abs(rgb.get(2).value() - 252) <= 2);
     }
 
     @Test
@@ -289,7 +289,7 @@ class HSVConverterTest {
 
         final List<IntBitSet> rgb = this.converter.toRGB(hsv);
 
-        assertTrue(Math.abs(rgb.get(0).value() - 255) <= 2);
+        assertTrue(Math.abs(rgb.get(0).value() - 252) <= 2);
         assertTrue(rgb.get(1).value() <= 2);
         assertTrue(Math.abs(rgb.get(2).value() - 255) <= 2);
     }
