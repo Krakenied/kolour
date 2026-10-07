@@ -1,4 +1,4 @@
-package dev.krakenied.kolour.converters2;
+package dev.krakenied.kolour.converters;
 
 import dev.krakenied.kolour.object.IntBitSet;
 import org.jspecify.annotations.NullMarked;

@@ -1,6 +1,6 @@
 package dev.krakenied.kolour.test;
 
-import dev.krakenied.kolour.converters2.HSVConverter;
+import dev.krakenied.kolour.converters.HSVConverter;
 import dev.krakenied.kolour.object.IntBitSet;
 import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
