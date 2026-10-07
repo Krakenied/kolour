@@ -42,11 +42,11 @@ public final class RGBConverter extends ColorConverter {
 
     private static int quantize(final int value, final int bits) {
         final int max = (1 << bits) - 1;
-        return (value * max + Constants.RGB_MAX / 2) / Constants.RGB_MAX;
+        return (value * max + Constants.RGB_CHAN_MAX / 2) / Constants.RGB_CHAN_MAX;
     }
 
     private static int dequantize(final int value, final int bits) {
         final int max = (1 << bits) - 1;
-        return (value * Constants.RGB_MAX + max / 2) / max;
+        return (value * Constants.RGB_CHAN_MAX + max / 2) / max;
     }
 }

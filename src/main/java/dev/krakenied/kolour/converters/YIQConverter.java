@@ -12,16 +12,16 @@ import java.util.List;
 @NullMarked
 public final class YIQConverter extends ColorConverter {
 
-    private static final double Y_MIN = Constants.RGB_MIN;
-    private static final double Y_MAX = Constants.RGB_MAX;
+    private static final double Y_MIN = Constants.RGB_CHAN_MIN;
+    private static final double Y_MAX = Constants.RGB_CHAN_MAX;
     private static final Normalizer Y_NORMALIZER = new SimpleNormalizer(Y_MIN, Y_MAX);
 
-    private static final double I_MIN = -0.599d * Constants.RGB_MAX;
-    private static final double I_MAX = 0.599d * Constants.RGB_MAX;
+    private static final double I_MIN = -0.599d * Constants.RGB_CHAN_MAX;
+    private static final double I_MAX = 0.599d * Constants.RGB_CHAN_MAX;
     private static final Normalizer I_NORMALIZER = new SimpleNormalizer(I_MIN, I_MAX);
 
-    private static final double Q_MIN = -0.5251d * Constants.RGB_MAX;
-    private static final double Q_MAX = 0.5251d * Constants.RGB_MAX;
+    private static final double Q_MIN = -0.5251d * Constants.RGB_CHAN_MAX;
+    private static final double Q_MAX = 0.5251d * Constants.RGB_CHAN_MAX;
     private static final Normalizer Q_NORMALIZER = new SimpleNormalizer(Q_MIN, Q_MAX);
 
     public YIQConverter() {

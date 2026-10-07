@@ -1,47 +1,59 @@
 package dev.krakenied.kolour.converters;
 
 import dev.krakenied.kolour.object.IntBitSet;
+import dev.krakenied.kolour.util.Constants;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @NullMarked
-public abstract class ColorConverter {
-
-    private static final List<Integer> RGB888_BIT_SIZE_LIST = List.of(8, 8, 8);
+public abstract class ColorConverter<F, T> {
 
     @FunctionalInterface
-    public interface Function {
+    public interface DataFunction<D extends @Nullable Object> {
 
-        IntBitSet apply(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index); // TODO: check if full bitSizeList is actually needed
+        D get(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index);
     }
 
-    protected final List<Function> fromRGBFunctions;
-    protected final List<Function> toRGBFunctions;
+    @FunctionalInterface
+    public interface ConvertingFunction<D extends @Nullable Object> {
+
+        IntBitSet apply(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index, final @Nullable D data);
+    }
+
+    protected final List<ConvertingFunction<F>> fromRGBFunctions;
+    protected final List<ConvertingFunction<T>> toRGBFunctions;
 
     public ColorConverter() {
         this.fromRGBFunctions = new ArrayList<>();
-        this.toRGBFunctions = new ArrayList<>();
+        this.toRGBFunctions = new ArrayList<>(Constants.RGB_CHAN_COUNT);
     }
 
-    public final List<IntBitSet> fromRGB(final List<IntBitSet> rgb, final List<Integer> bitSizeList) {
-        final List<IntBitSet> ret = new ArrayList<>(this.fromRGBFunctions.size());
-
-        for (int i = 0; i < this.fromRGBFunctions.size(); i++) {
-            final Function function = this.fromRGBFunctions.get(i);
-            ret.add(function.apply(rgb, bitSizeList, i));
-        }
-
-        return ret;
+    public @Nullable F fromRGBData(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index) {
+        return null;
     }
 
-    public final List<IntBitSet> toRGB(final List<IntBitSet> list) {
-        final List<IntBitSet> ret = new ArrayList<>(this.toRGBFunctions.size());
+    public final List<IntBitSet> fromRGB(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList) {
+        return convert(bitSetList, bitSizeList, this::fromRGBData, this.fromRGBFunctions);
+    }
 
-        for (int i = 0; i < this.toRGBFunctions.size(); i++) {
-            final Function function = this.toRGBFunctions.get(i);
-            ret.add(function.apply(list, RGB888_BIT_SIZE_LIST, i));
+    public @Nullable T toRGBData(List<IntBitSet> bitSetList, List<Integer> bitSizeList, int index) {
+        return null;
+    }
+
+    public final List<IntBitSet> toRGB(final List<IntBitSet> bitSetList) {
+        return convert(bitSetList, Constants.RGB_BIT_SIZE_LIST, this::toRGBData, this.toRGBFunctions);
+    }
+
+    private static <U extends @Nullable Object> List<IntBitSet> convert(final List<IntBitSet> bitSetList, final List<Integer> bitSizeList, final DataFunction<U> dataFunction, final List<ConvertingFunction<U>> functions) {
+        final List<IntBitSet> ret = new ArrayList<>(functions.size());
+
+        for (int i = 0; i < functions.size(); i++) {
+            final ConvertingFunction<U> function = functions.get(i);
+            final U data = dataFunction.get(bitSetList, bitSizeList, i);
+            ret.add(function.apply(bitSetList, bitSizeList, i, data));
         }
 
         return ret;
