@@ -11,13 +11,13 @@ public final class HSVConverter extends ColorConverter {
     public HSVConverter() {
         super();
 
-        this.fromRGBFunctions.add(HSVConverter::HSVToRed);
-        this.fromRGBFunctions.add(HSVConverter::HSVToGreen);
-        this.fromRGBFunctions.add(HSVConverter::HSVToBlue);
+        this.fromRGBFunctions.add(HSVConverter::hueFromRGB);
+        this.fromRGBFunctions.add(HSVConverter::saturationFromRGB);
+        this.fromRGBFunctions.add(HSVConverter::valueFromRGB);
 
-        this.toRGBFunctions.add(HSVConverter::hueFromRGB);
-        this.toRGBFunctions.add(HSVConverter::saturationFromRGB);
-        this.toRGBFunctions.add(HSVConverter::valueFromRGB);
+        this.toRGBFunctions.add(HSVConverter::HSVToRed);
+        this.toRGBFunctions.add(HSVConverter::HSVToGreen);
+        this.toRGBFunctions.add(HSVConverter::HSVToBlue);
     }
 
     private record FloatTuple3(float first, float second, float third) {
@@ -72,7 +72,7 @@ public final class HSVConverter extends ColorConverter {
         }
 
         return new IntBitSet(
-                (int) (hue / TAU * ((1 << bitSizeList.get(index) - 1))),
+                (int) (hue / TAU * ((1 << bitSizeList.get(index)) - 1)),
                 bitSizeList.get(index)
         );
     }
@@ -131,7 +131,7 @@ public final class HSVConverter extends ColorConverter {
         }
 
         return new IntBitSet(
-                (int) ((r + cim.third) * ((1 << bitSizeList.get(index) - 1))),
+                (int) ((r + cim.third) * ((1 << bitSizeList.get(index)) - 1)),
                 bitSizeList.get(index)
         );
     }
@@ -152,7 +152,7 @@ public final class HSVConverter extends ColorConverter {
         }
 
         return new IntBitSet(
-                (int) ((g + cim.third) * ((1 << bitSizeList.get(index) - 1))),
+                (int) ((g + cim.third) * ((1 << bitSizeList.get(index)) - 1)),
                 bitSizeList.get(index)
         );
     }
@@ -166,14 +166,14 @@ public final class HSVConverter extends ColorConverter {
 
         if (hue >= 180.0f && hue < 300.0f) {
             b = cim.first;
-        } else if (hue > 180.0f) {
+        } else if (hue > 120.0f) {
             b = cim.second;
         } else {
             b = 0.0f;
         }
 
         return new IntBitSet(
-                (int) ((b + cim.third) * ((1 << bitSizeList.get(index) - 1))),
+                (int) ((b + cim.third) * ((1 << bitSizeList.get(index)) - 1)),
                 bitSizeList.get(index)
         );
     }
